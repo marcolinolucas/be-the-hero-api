@@ -1,5 +1,6 @@
 const express = require('express');
 const cors = require('cors');
+const { errors } = require('celebrate');
 
 const statusError = require('./lib/statusError');
 
@@ -12,6 +13,8 @@ app.use(express.json());
 app.use('/ongs', require('./routes/ongRoutes'));
 app.use('/incidents', require('./routes/incidentRoutes'));
 app.use('/session', require('./routes/sessionRoutes'));
+
+app.use(errors());
 
 app.use((req, res) => statusError(res, 404, 'Not Found'));
 
