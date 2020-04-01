@@ -82,6 +82,11 @@ Now all is working. Congratulations!
 
 If you are using [Insomnia](https://insomnia.rest/) or another REST API Client, you can download all routes [here](https://api.myjson.com/bins/169t3g) or in the [Google Drive](https://drive.google.com/file/d/1EaZfI0l6Zo3wKaTcx9PQscOlYgJYcx7O/view).
 
+## Other Repositories of the Project
+
+- [Front-end](https://github.com/marcolinolucas/be-the-hero)
+
+
 ## Contact
 
 - [GitHub](https://github.com/marcolinolucas)
