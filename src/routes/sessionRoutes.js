@@ -1,4 +1,5 @@
 const express = require('express');
+const { celebrate } = require('celebrate');
 
 const routes = express.Router();
 
@@ -6,10 +7,11 @@ const ongDao = require('../dao/ongDao');
 
 const statusError = require('../lib/statusError');
 
-routes.post('/login', async (req, res) => {
+const { loginSchema, updateSchema } = require('../validators/sessionValidator');
+
+routes.post('/login', celebrate(loginSchema), async (req, res) => {
 	try {
 		const { ongId } = req.body;
-		if (!ongId) return statusError(res, 400, 'ongId is required');
 
 		const ong = await ongDao.findOngById({ ongId });
 		if (!ong) return statusError(res, 404, 'ONG not found');
@@ -20,11 +22,10 @@ routes.post('/login', async (req, res) => {
 	}
 });
 
-routes.put('/update', async (req, res) => {
+routes.put('/update', celebrate(updateSchema), async (req, res) => {
 	try {
 		const { email, whatsapp } = req.body;
 		const ongId = req.headers.authorization;
-		if (!ongId) return statusError(res, 400, 'ongId is required');
 
 		const ong = await ongDao.findOngById({ ongId });
 		if (!ong) return statusError(res, 404, 'ONG not found');

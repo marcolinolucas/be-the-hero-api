@@ -1,4 +1,5 @@
 const express = require('express');
+const { celebrate } = require('celebrate');
 
 const routes = express.Router();
 
@@ -7,7 +8,15 @@ const ongDao = require('../dao/ongDao');
 
 const statusError = require('../lib/statusError');
 
-routes.get('/', async (req, res) => {
+const {
+	pageSchema,
+	headerSchema,
+	createSchema,
+	deleteSchema,
+	updateSchema,
+} = require('../validators/incidentValidator');
+
+routes.get('/', celebrate(pageSchema), async (req, res) => {
 	try {
 		const { page = 1, limit = 5 } = req.query;
 
@@ -24,10 +33,9 @@ routes.get('/', async (req, res) => {
 	}
 });
 
-routes.get('/ong', async (req, res) => {
+routes.get('/ong', celebrate(headerSchema), async (req, res) => {
 	try {
 		const ongId = req.headers.authorization;
-		if (!ongId) return statusError(res, 400, 'ongId is required');
 
 		const ong = await ongDao.findOngById({ ongId });
 		if (!ong) return statusError(res, 404, 'ONG not found');
@@ -39,14 +47,10 @@ routes.get('/ong', async (req, res) => {
 	}
 });
 
-routes.post('/create', async (req, res) => {
+routes.post('/create', celebrate(createSchema), async (req, res) => {
 	try {
 		const { title, description, value } = req.body;
 		const ongId = req.headers.authorization;
-
-		if (!title) return statusError(res, 400, 'title is required');
-		if (!description) return statusError(res, 400, 'description is required');
-		if (!value) return statusError(res, 400, 'value is required');
 
 		const ong = await ongDao.findOngById({ ongId });
 		if (!ong) return statusError(res, 404, 'ONG not found');
@@ -64,13 +68,10 @@ routes.post('/create', async (req, res) => {
 	}
 });
 
-routes.delete('/delete/:id', async (req, res) => {
+routes.delete('/delete/:id', celebrate(deleteSchema), async (req, res) => {
 	try {
 		const { id } = req.params;
 		const ongId = req.headers.authorization;
-
-		if (!id) return statusError(res, 400, 'id is required');
-		if (!ongId) return statusError(res, 400, 'ongId is required');
 
 		const incident = await incidentDao.findIncidentById({ id });
 		if (!incident) return statusError(res, 404, 'Incident not found');
@@ -86,15 +87,11 @@ routes.delete('/delete/:id', async (req, res) => {
 	}
 });
 
-routes.put('/update/:id', async (req, res) => {
+routes.put('/update/:id', celebrate(updateSchema), async (req, res) => {
 	try {
 		const { title, description, value } = req.body;
-
 		const { id } = req.params;
-		if (!id) return statusError(res, 400, 'incidentId is required');
-
 		const ongId = req.headers.authorization;
-		if (!ongId) return statusError(res, 400, 'ongId is required');
 
 		const ong = await ongDao.findOngById({ ongId });
 		if (!ong) return statusError(res, 404, 'ONG not found');
