@@ -5,8 +5,6 @@ const routes = express.Router();
 
 const ongDao = require('../dao/ongDao');
 
-const statusError = require('../lib/statusError');
-
 const { loginSchema, updateSchema } = require('../validators/sessionValidator');
 
 routes.post('/login', celebrate(loginSchema), async (req, res) => {
@@ -14,11 +12,11 @@ routes.post('/login', celebrate(loginSchema), async (req, res) => {
 		const { ongId } = req.body;
 
 		const ong = await ongDao.findOngById({ ongId });
-		if (!ong) return statusError(res, 404, 'ONG not found');
+		if (!ong) return res.status(404).json({ error: 'ONG not found' });
 
 		return res.json(ong);
-	} catch (error) {
-		return statusError(res, 500, error.message);
+	} catch (err) {
+		return res.status(500).json({ error: err.message });
 	}
 });
 
@@ -28,20 +26,20 @@ routes.put('/update', celebrate(updateSchema), async (req, res) => {
 		const ongId = req.headers.authorization;
 
 		const ong = await ongDao.findOngById({ ongId });
-		if (!ong) return statusError(res, 404, 'ONG not found');
+		if (!ong) return res.status(404).json({ error: 'ONG not found' });
 
 		const data = {};
 		if (email) data.email = email;
 		if (whatsapp) data.whatsapp = whatsapp;
 
 		if (Object.values(data).length === 0) {
-			return statusError(res, 404, 'Empty update');
+			return res.status(404).json({ error: 'Empty update' });
 		}
 
 		await ongDao.updateOngById({ ongId, data });
 		return res.status(204).send();
-	} catch (error) {
-		return statusError(res, 500, error.message);
+	} catch (err) {
+		return res.status(500).json({ error: err.message });
 	}
 });
 

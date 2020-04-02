@@ -10,7 +10,6 @@ const loginSchema = {
 	[Segments.BODY]: Joi.object().keys({
 		ongId: Joi.string().required().length(8),
 	}).required(),
-	...headerSchema,
 };
 
 const updateSchema = {

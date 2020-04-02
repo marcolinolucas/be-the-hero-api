@@ -1,5 +1,10 @@
 const connection = require('../database/connection');
 
+function createIncident(data) {
+	return connection('incidents')
+		.insert(data);
+}
+
 function findIncidents() {
 	return connection('incidents')
 		.select('*');
@@ -8,7 +13,7 @@ function findIncidents() {
 function findIncidentById({ id }) {
 	return connection('incidents')
 		.where('id', id)
-		.select('ongId')
+		.select('*')
 		.first();
 }
 
@@ -33,17 +38,6 @@ function findIncidentByPage({ page, limit }) {
 		]);
 }
 
-function createIncident(data) {
-	return connection('incidents')
-		.insert(data);
-}
-
-function deleteIncident({ id }) {
-	return connection('incidents')
-		.where('id', id)
-		.delete();
-}
-
 function incidentsCount() {
 	return connection('incidents')
 		.count();
@@ -55,13 +49,19 @@ function updateIncident({ id, data }) {
 		.update(data);
 }
 
+function deleteIncident({ id }) {
+	return connection('incidents')
+		.where('id', id)
+		.delete();
+}
+
 module.exports = {
+	createIncident,
 	findIncidents,
 	findIncidentById,
 	findIncidentByPage,
 	findIncidentsByOngId,
-	createIncident,
-	deleteIncident,
 	incidentsCount,
 	updateIncident,
+	deleteIncident,
 };

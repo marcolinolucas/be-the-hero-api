@@ -1,0 +1,26 @@
+[
+	{
+		"id": "1c42a05d",
+		"name": "Test1",
+		"email": "test1@test.com",
+		"whatsapp": "21000000001",
+		"city": "Test City 1",
+		"uf": "T1"
+	},
+	{
+		"id": "2c42a05d",
+		"name": "Test2",
+		"email": "test2@test.com",
+		"whatsapp": "21000000002",
+		"city": "Test City 2",
+		"uf": "T2"
+	},
+	{
+		"id": "3c42a05d",
+		"name": "Test3",
+		"email": "test3@test.com",
+		"whatsapp": "21000000003",
+		"city": "Test City 3",
+		"uf": "T3"
+	}
+]

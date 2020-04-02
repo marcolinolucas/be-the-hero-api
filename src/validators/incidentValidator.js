@@ -17,7 +17,6 @@ const pageSchema = {
 		page: Joi.number(),
 		limit: Joi.number(),
 	}),
-	...headerSchema,
 };
 
 const createSchema = {

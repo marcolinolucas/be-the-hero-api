@@ -4,9 +4,12 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon src/app.js",
+    "start": "nodemon src/server.js",
     "migrations": "npx knex migrate:latest",
-    "lint": "./node_modules/.bin/eslint --fix --quiet \"**/*.js\""
+		"lint": "./node_modules/.bin/eslint --fix --quiet \"**/*.js\"",
+		"test-dao": "cross-env NODE_ENV=test jest incidentDao && jest ongDao",
+		"test-lib": "cross-env NODE_ENV=test jest jest hashId",
+		"test-routes": "cross-env NODE_ENV=test jest incidentRoutes && jest ongRoutes && jest sessionRoutes"
   },
   "keywords": [],
   "author": "",
@@ -14,6 +17,7 @@
   "dependencies": {
     "celebrate": "^12.0.1",
     "cors": "^2.8.5",
+    "cross-env": "^7.0.2",
     "express": "^4.17.1",
     "knex": "^0.20.13",
     "sqlite3": "^4.1.1"
@@ -22,6 +26,8 @@
     "eslint": "^6.8.0",
     "eslint-config-airbnb-base": "^13.0.0",
     "eslint-plugin-import": "^2.13.0",
-    "nodemon": "^2.0.2"
+		"nodemon": "^2.0.2",
+    "jest": "^25.2.4",
+    "supertest": "^4.0.2"
   }
 }

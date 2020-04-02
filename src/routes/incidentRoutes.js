@@ -6,8 +6,6 @@ const routes = express.Router();
 const incidentDao = require('../dao/incidentDao');
 const ongDao = require('../dao/ongDao');
 
-const statusError = require('../lib/statusError');
-
 const {
 	pageSchema,
 	headerSchema,
@@ -28,8 +26,8 @@ routes.get('/', celebrate(pageSchema), async (req, res) => {
 
 		res.header('X-Total-Count', incidentsCount['count(*)']);
 		return res.json(incidents);
-	} catch (error) {
-		return statusError(res, 500, error.message);
+	} catch (err) {
+		return res.status(500).json({ error: err.message });
 	}
 });
 
@@ -38,12 +36,12 @@ routes.get('/ong', celebrate(headerSchema), async (req, res) => {
 		const ongId = req.headers.authorization;
 
 		const ong = await ongDao.findOngById({ ongId });
-		if (!ong) return statusError(res, 404, 'ONG not found');
+		if (!ong) return res.status(404).json({ error: 'ONG not found' });
 
 		const incidents = await incidentDao.findIncidentsByOngId({ ongId });
 		return res.json(incidents);
-	} catch (error) {
-		return statusError(res, 500, error.message);
+	} catch (err) {
+		return res.status(500).json({ error: err.message });
 	}
 });
 
@@ -53,7 +51,7 @@ routes.post('/create', celebrate(createSchema), async (req, res) => {
 		const ongId = req.headers.authorization;
 
 		const ong = await ongDao.findOngById({ ongId });
-		if (!ong) return statusError(res, 404, 'ONG not found');
+		if (!ong) return res.status(404).json({ error: 'ONG not found' });
 
 		const [id] = await incidentDao.createIncident({
 			title,
@@ -63,8 +61,8 @@ routes.post('/create', celebrate(createSchema), async (req, res) => {
 		});
 
 		return res.json({ id });
-	} catch (error) {
-		return statusError(res, 500, error.message);
+	} catch (err) {
+		return res.status(500).json({ error: err.message });
 	}
 });
 
@@ -74,16 +72,16 @@ routes.delete('/delete/:id', celebrate(deleteSchema), async (req, res) => {
 		const ongId = req.headers.authorization;
 
 		const incident = await incidentDao.findIncidentById({ id });
-		if (!incident) return statusError(res, 404, 'Incident not found');
+		if (!incident) return res.status(404).json({ error: 'Incident not found' });
 
 		if (incident.ongId !== ongId) {
-			return statusError(res, 401, 'Operation not permitted');
+			return res.status(401).json({ error: 'Operation not permitted' });
 		}
 
 		await incidentDao.deleteIncident({ id });
 		return res.status(204).send();
-	} catch (error) {
-		return statusError(res, 500, error.message);
+	} catch (err) {
+		return res.status(500).json({ error: err.message });
 	}
 });
 
@@ -94,13 +92,13 @@ routes.put('/update/:id', celebrate(updateSchema), async (req, res) => {
 		const ongId = req.headers.authorization;
 
 		const ong = await ongDao.findOngById({ ongId });
-		if (!ong) return statusError(res, 404, 'ONG not found');
+		if (!ong) return res.status(404).json({ error: 'ONG not found' });
 
 		const incident = await incidentDao.findIncidentById({ id });
-		if (!incident) return statusError(res, 404, 'Incident not found');
+		if (!incident) return res.status(404).json({ error: 'Incident not found' });
 
 		if (incident.ongId !== ongId) {
-			return statusError(res, 401, 'Operation not permitted');
+			return res.status(401).json({ error: 'Operation not permitted' });
 		}
 
 		const data = {};
@@ -110,8 +108,8 @@ routes.put('/update/:id', celebrate(updateSchema), async (req, res) => {
 
 		await incidentDao.updateIncident({ id, data });
 		return res.status(204).send();
-	} catch (error) {
-		return statusError(res, 500, error.message);
+	} catch (err) {
+		return res.status(500).json({ error: err.message });
 	}
 });
 

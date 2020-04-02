@@ -6,7 +6,6 @@ const routes = express.Router();
 const ongDao = require('../dao/ongDao');
 
 const hashId = require('../lib/hashId');
-const statusError = require('../lib/statusError');
 
 const { createSchema, deleteSchema } = require('../validators/ongValidator');
 
@@ -14,8 +13,8 @@ routes.get('/', async (req, res) => {
 	try {
 		const ongs = await ongDao.findOngs();
 		return res.json(ongs);
-	} catch (error) {
-		return statusError(res, 500, error.message);
+	} catch (err) {
+		return res.status(500).json({ error: err.message });
 	}
 });
 
@@ -29,7 +28,7 @@ routes.post('/create', celebrate(createSchema), async (req, res) => {
 			if (ong.name === name) reasons.push('name already registered');
 			if (ong.email === email) reasons.push('email already registered');
 			if (ong.whatsapp === whatsapp) reasons.push('whatsapp already registered');
-			return statusError(res, 400, reasons);
+			return res.status(400).json({ error: reasons });
 		}
 
 		const id = hashId();
@@ -44,8 +43,8 @@ routes.post('/create', celebrate(createSchema), async (req, res) => {
 		});
 
 		return res.json({ id });
-	} catch (error) {
-		return statusError(res, 500, error.message);
+	} catch (err) {
+		return res.status(500).json({ error: err.message });
 	}
 });
 
@@ -54,12 +53,12 @@ routes.delete('/delete', celebrate(deleteSchema), async (req, res) => {
 		const ongId = req.headers.authorization;
 
 		const ong = await ongDao.findOngById({ ongId });
-		if (!ong) return statusError(res, 404, 'ONG not found');
+		if (!ong) return res.status(404).json({ error: 'ONG not found' });
 
 		await ongDao.deleteOng({ ongId });
 		return res.status(204).send();
-	} catch (error) {
-		return statusError(res, 500, error.message);
+	} catch (err) {
+		return res.status(500).json({ error: err.message });
 	}
 });
 

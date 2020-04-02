@@ -1,5 +1,9 @@
 const connection = require('../database/connection');
 
+function createOng(data) {
+	return connection('ongs').insert(data);
+}
+
 function findOngs() {
 	return connection('ongs').select('*');
 }
@@ -20,8 +24,10 @@ function findOngByData({ name, email, whatsapp }) {
 		.first();
 }
 
-function createOng(data) {
-	return connection('ongs').insert(data);
+function updateOngById({ ongId, data }) {
+	return connection('ongs')
+		.where('id', ongId)
+		.update(data);
 }
 
 function deleteOng({ ongId }) {
@@ -30,17 +36,11 @@ function deleteOng({ ongId }) {
 		.delete();
 }
 
-function updateOngById({ ongId, data }) {
-	return connection('ongs')
-		.where('id', ongId)
-		.update(data);
-}
-
 module.exports = {
+	createOng,
 	findOngs,
 	findOngById,
 	findOngByData,
-	createOng,
-	deleteOng,
 	updateOngById,
+	deleteOng,
 };
