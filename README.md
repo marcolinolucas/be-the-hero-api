@@ -20,21 +20,25 @@ The application consists in a NGOs/ONGs register a incident with a title, descri
 | [cors]                | [![cors-version]][cors-package] | Enable CORS with various options |
 | [knex]             | [![knex-version]][knex-package] | SQL query builder |
 | [sqlite3]             | [![sqlite3-version]][sqlite3-package] | Asynchronous, non-blocking SQLite3 |
+| [celebrate]             | [![celebrate-version]][celebrate-package] | Express middleware with joi validation |
 
 [express]: https://github.com/expressjs/express
 [cors]: https://github.com/expressjs/cors
 [knex]: https://github.com/knex/knex
 [sqlite3]: https://github.com/mapbox/node-sqlite3
+[celebrate]: https://github.com/arb/celebrate
 
 [express-version]: https://img.shields.io/npm/v/express.svg
 [cors-version]: https://img.shields.io/npm/v/cors.svg
 [knex-version]: https://img.shields.io/npm/v/knex.svg
 [sqlite3-version]: https://img.shields.io/npm/v/sqlite3.svg
+[celebrate-version]: https://img.shields.io/npm/v/celebrate.svg
 
 [express-package]: https://www.npmjs.com/package/express
 [cors-package]: https://www.npmjs.com/package/cors
 [knex-package]: https://www.npmjs.com/package/knex
 [sqlite3-package]: https://www.npmjs.com/package/sqlite3
+[celebrate-package]: https://www.npmjs.com/package/celebrate
 
 ## Dev Dependencies
 
@@ -42,15 +46,27 @@ The application consists in a NGOs/ONGs register a incident with a title, descri
 |---------|--------|-------------|
 | [nodemon]          | [![nodemon-version]][nodemon-package] | Automatically restarting the node application |
 | [eslint]                | [![eslint-version]][eslint-package] | Identify and reports patterns found in ECMAScript/JavaScript code |
+| [jest]          | [![jest-version]][jest-package] | JavaScript testing solution |
+| [supertest]          | [![supertest-version]][supertest-package] | HTTP assertions for tests |
+| [cross-env]          | [![cross-env-version]][cross-env-package] | Use environment variables across platforms |
 
 [nodemon]: https://github.com/remy/nodemon
 [eslint]: https://github.com/eslint/eslint
+[jest]: https://github.com/facebook/jest
+[supertest]: https://github.com/visionmedia/supertest
+[cross-env]: https://github.com/kentcdodds/cross-env
 
 [nodemon-version]: https://img.shields.io/npm/v/nodemon.svg
 [eslint-version]: https://img.shields.io/npm/v/eslint.svg
+[jest-version]: https://img.shields.io/npm/v/jest.svg
+[supertest-version]: https://img.shields.io/npm/v/supertest.svg
+[cross-env-version]: https://img.shields.io/npm/v/cross-env.svg
 
 [nodemon-package]: https://www.npmjs.com/package/nodemon
 [eslint-package]: https://www.npmjs.com/package/eslint
+[jest-package]: https://www.npmjs.com/package/jest
+[supertest-package]: https://www.npmjs.com/package/supertest
+[cross-env-package]: https://www.npmjs.com/package/cross-env
 
 ## Rocketseat Explication
 
@@ -77,6 +93,9 @@ Now all is working. Congratulations!
 | ``` npm run start ```             | Start the nodemon/server |
 | ``` npm run migrations ```             | Start the database (SQLite) |
 | ``` npm run lint ```             | Verify patterns code |
+| ``` npm run test-dao ```             | Test Dao files |
+| ``` npm run test-lib ```             | Test Lib files |
+| ``` npm run test-routes ```             | Test Routes files |
 
 ## Routes
 
@@ -85,7 +104,7 @@ If you are using [Insomnia](https://insomnia.rest/) or another REST API Client, 
 ## Other Repositories of the Project
 
 - [Front-end](https://github.com/marcolinolucas/be-the-hero)
-
+- [Mobile](https://github.com/marcolinolucas/be-the-hero-mobile)
 
 ## Contact
 
