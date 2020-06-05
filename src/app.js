@@ -11,6 +11,7 @@ app.use(express.json());
 app.use('/ongs', require('./routes/ongRoutes'));
 app.use('/incidents', require('./routes/incidentRoutes'));
 app.use('/session', require('./routes/sessionRoutes'));
+app.use('/auth', require('./routes/authorizeRoutes'));
 
 app.use(errors());
 
