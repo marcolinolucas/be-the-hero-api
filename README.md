@@ -116,4 +116,3 @@ If you are using [Insomnia](https://insomnia.rest/) or another REST API Client, 
 [MIT](http://opensource.org/licenses/MIT)
 
 Copyright (c) 2020, Lucas Marcolino.
-# instant-grow-api
